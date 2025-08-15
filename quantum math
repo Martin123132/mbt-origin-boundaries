@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>MBT Riemann Zero Test - LIVE</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .header { text-align: center; color: #ffff00; margin-bottom: 30px; }
+        .result { background: #003300; padding: 15px; margin: 10px 0; border-left: 4px solid #00ff00; }
+        .match { color: #00ff88; }
+        .miss { color: #ff4444; }
+        .success { background: #004400; color: #00ff00; font-weight: bold; }
+        .failure { background: #440000; color: #ff4444; font-weight: bold; }
+        #output { white-space: pre-wrap; }
+        .chart { background: #001100; padding: 10px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔍 MBT RIEMANN ZERO LIVE TEST</h1>
+        <h2>Testing Martin's Claims Right Now...</h2>
+    </div>
+
+```
+<div id="output">🚀 INITIALIZING MBT RIEMANN ZERO TEST...
+```
+
+</div>
+
+```
+<canvas id="visualization" width="800" height="400" style="border: 1px solid #00ff00; background: #000011;"></canvas>
+
+<script>
+    const output = document.getElementById('output');
+   
+    function log(message, className = '') {
+        const div = document.createElement('div');
+        div.textContent = message;
+        if (className) div.className = className;
+        output.appendChild(div);
+        output.scrollTop = output.scrollHeight;
+    }
+
+    // Known Riemann zeros (first 20)
+    const knownZeros = [
+        14.134725142, 21.022039639, 25.010857580, 30.424876126, 32.935061588,
+        37.586178159, 40.918719012, 43.327073281, 48.005150881, 49.773832478,
+        52.970321478, 56.446247697, 59.347044003, 60.831778525, 65.112544048,
+        67.079810529, 69.546401711, 72.067157674, 75.704690699, 77.144840069
+    ];
+
+    // MBT Echo Field Implementation
+    function mbtEchoField(t, nModes = 100) {
+        let result = { real: 0, imag: 0 };
+       
+        for (let n = 1; n <= nModes; n++) {
+            // Standard Dirichlet term: 1/n^s where s = 0.5 + it
+            const nPowReal = Math.pow(n, 0.5);
+            const nPowImag = t * Math.log(n);
+           
+            // 1/n^s = 1/(n^0.5 * e^(it*ln(n))) = 1/n^0.5 * e^(-it*ln(n))
+            const dirichletReal = Math.cos(-nPowImag) / nPowReal;
+            const dirichletImag = Math.sin(-nPowImag) / nPowReal;
+           
+            // MBT Echo enhancement
+            const echoPhase = 0.5 * Math.cos(n * Math.PI / 2);
+            const memoryFactor = 1.0 / Math.sqrt(1 + n * 0.3);
+            const phaseMod = 0.1 * Math.sin(n * t / 10);
+           
+            const totalPhase = echoPhase + phaseMod;
+            const enhancementReal = memoryFactor * Math.cos(totalPhase);
+            const enhancementImag = memoryFactor * Math.sin(totalPhase);
+           
+            // Multiply complex numbers: (a + bi)(c + di) = (ac - bd) + (ad + bc)i
+            const termReal = dirichletReal * enhancementReal - dirichletImag * enhancementImag;
+            const termImag = dirichletReal * enhancementImag + dirichletImag * enhancementReal;
+           
+            result.real += termReal;
+            result.imag += termImag;
+        }
+       
+        return Math.sqrt(result.real * result.real + result.imag * result.imag);
+    }
+
+    function runMBTTest() {
+        log("📊 SCANNING FOR ZEROS USING MBT ECHO FIELD...");
+        log("Range: t ∈ [12, 80], Resolution: 0.1");
+        log("");
+       
+        const tMin = 12, tMax = 80, resolution = 0.1;
+        const tValues = [];
+        const magnitudes = [];
+       
+        // Calculate MBT field magnitudes
+        for (let t = tMin; t <= tMax; t += resolution) {
+            const magnitude = mbtEchoField(t, 80);
+            tValues.push(t);
+            magnitudes.push(magnitude);
+        }
+       
+        log(`✅ Calculated ${tValues.length} MBT field values`);
+       
+        // Find local minima (potential zeros)
+        const candidates = [];
+        const threshold = 0.4;
+       
+        for (let i = 1; i < magnitudes.length - 1; i++) {
+            if (magnitudes[i] < magnitudes[i-1] &&
+                magnitudes[i] < magnitudes[i+1] &&
+                magnitudes[i] < threshold) {
+                candidates.push({
+                    t: tValues[i],
+                    magnitude: magnitudes[i]
+                });
+            }
+        }
+       
+        log(`🎯 Found ${candidates.length} potential zero candidates:`);
+        log("");
+       
+        // Validate against known zeros
+        const matches = [];
+        const tolerance = 0.5;
+       
+        candidates.forEach((candidate, i) => {
+            let closestZero = knownZeros[0];
+            let minDistance = Math.abs(candidate.t - closestZero);
+           
+            knownZeros.forEach(zero => {
+                const distance = Math.abs(candidate.t - zero);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestZero = zero;
+                }
+            });
+           
+            const isMatch = minDistance < tolerance;
+            const status = isMatch ? "✅ MATCH" : "❌ MISS";
+            const className = isMatch ? "match" : "miss";
+           
+            if (isMatch) {
+                matches.push({
+                    prediction: candidate.t,
+                    known: closestZero,
+                    error: minDistance
+                });
+            }
+           
+            log(`Prediction ${i+1}: t = ${candidate.t.toFixed(3)} | Closest: ${closestZero.toFixed(3)} | Error: ${minDistance.toFixed(3)} | ${status}`, className);
+        });
+       
+        // Calculate results
+        const accuracy = candidates.length > 0 ? (matches.length / candidates.length * 100) : 0;
+       
+        log("");
+        log("📋 FINAL RESULTS:", "result");
+        log(`   Predictions made: ${candidates.length}`);
+        log(`   Successful matches: ${matches.length}`);
+        log(`   Accuracy: ${accuracy.toFixed(1)}%`);
+       
+        if (matches.length > 0) {
+            const avgError = matches.reduce((sum, m) => sum + m.error, 0) / matches.length;
+            log(`   Average error: ${avgError.toFixed(4)}`);
+        }
+       
+        log("");
+       
+        // Final verdict
+        if (accuracy > 50) {
+            log("🎉 SUCCESS! MBT APPROACH VALIDATED!", "success");
+            log("   Martin's approach shows genuine predictive power");
+            log("   This is not random - there's real mathematical structure!");
+            log("   🤯 MARTIN WAS RIGHT - MBT ACTUALLY WORKS!");
+        } else if (accuracy > 25) {
+            log("🤔 PARTIAL SUCCESS - Some correlation detected", "result");
+            log(`   ${accuracy.toFixed(1)}% accuracy suggests possible pattern`);
+            log("   Needs refinement but shows promise");
+        } else {
+            log("❌ NO SIGNIFICANT CORRELATION", "failure");
+            log(`   ${accuracy.toFixed(1)}% accuracy is not better than random`);
+            log("   MBT approach doesn't show clear Riemann correlation");
+        }
+       
+        // Visualize results
+        visualizeResults(tValues, magnitudes, candidates, matches);
+       
+        return accuracy > 25;
+    }
+
+    function visualizeResults(tValues, magnitudes, candidates, matches) {
+        const canvas = document.getElementById('visualization');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+       
+        ctx.clearRect(0, 0, width, height);
+       
+        // Plot MBT field magnitude
+        ctx.strokeStyle = '#00ff88';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+       
+        const maxMag = Math.max(...magnitudes);
+        const minT = Math.min(...tValues);
+        const maxT = Math.max(...tValues);
+       
+        tValues.forEach((t, i) => {
+            const x = (t - minT) / (maxT - minT) * width;
+            const y = height - (magnitudes[i] / maxMag * height * 0.8);
+           
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+       
+        // Mark known zeros
+        ctx.strokeStyle = '#ffff00';
+        ctx.lineWidth = 2;
+        knownZeros.forEach(zero => {
+            if (zero >= minT && zero <= maxT) {
+                const x = (zero - minT) / (maxT - minT) * width;
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+        });
+       
+        // Mark MBT predictions
+        ctx.fillStyle = '#ff0088';
+        candidates.forEach(candidate => {
+            const x = (candidate.t - minT) / (maxT - minT) * width;
+            const y = height - (candidate.magnitude / maxMag * height * 0.8);
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, 2 * Math.PI);
+            ctx.fill();
+        });
+       
+        // Mark successful matches
+        ctx.fillStyle = '#00ffff';
+        matches.forEach(match => {
+            const x = (match.prediction - minT) / (maxT - minT) * width;
+            ctx.beginPath();
+            ctx.arc(x, 20, 6, 0, 2 * Math.PI);
+            ctx.fill();
+        });
+       
+        // Legend
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '12px Courier New';
+        ctx.fillText('Green: MBT Field | Yellow: Known Zeros | Pink: Predictions | Cyan: Matches', 10, 20);
+    }
+
+    // Run the test
+    log("🔬 MBT RIEMANN ZERO TESTER");
+    log("=" * 50);
+    log("Testing Martin's MBT echo field approach...");
+    log(`Known zeros loaded: ${knownZeros.length}`);
+    log("");
+
+    setTimeout(() => {
+        runMBTTest();
+    }, 1000);
+</script>
+```
+
+</body>
+</html>
