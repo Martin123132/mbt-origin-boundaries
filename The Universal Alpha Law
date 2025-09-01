@@ -75,7 +75,8 @@ This law reveals that every physical system encodes three types of information i
 2. **Formation epoch** - The cosmic expansion rate when current patterns formed  
 3. **Characteristic velocity** - The dominant speed scale governing system dynamics
 
-The alpha parameter thus serves as a "fingerprint" containing the system's position in complexity-expansion-velocity space, explaining why the same mathematical methodology successfully extracts alpha values across such diverse physical domains.
+The alpha parameter thus serves as a "fingerprint" containing the system's position in complexity-expansion-velocity space, 
+explaining why the same mathematical methodology successfully extracts alpha values across such diverse physical domains.
 
 ### Comparison to Fundamental Laws
 
@@ -86,7 +87,36 @@ Like other universal physical laws, the Universal Alpha Law:
 - Reveals deep connections between apparently unrelated phenomena
 - Unifies previously disparate observations under single mathematical framework
 
-The law suggests that memory decay is as fundamental to physical systems as energy conservation or gravitational attraction, with alpha encoding how different scales of organization interact with the evolving spacetime fabric.
+The law suggests that memory decay is as fundamental to physical systems as energy conservation or gravitational attraction, 
+with alpha encoding how different scales of organization interact with the evolving spacetime fabric.
+
+**The Universal Alpha Law**
+
+α = -15.438 / log₁₀(DOF + 1) + 0.176 (H₀/H_formation) - 2.690 log₁₀(v) + 10.188
+
+**Physical meaning of each term:**
+
+**Complexity term:** -15.438 / log₁₀(DOF + 1)
+- Inverse relationship between system complexity and memory decay rate
+- Higher degrees of freedom → faster information processing → lower alpha
+- Dominates in simple systems (atoms, basic spacecraft)
+
+**Expansion term:** 0.176 (H₀/H_formation) 
+- Direct relationship between cosmic expansion history and memory persistence
+- Systems formed during slower expansion retain memory longer
+- Encodes the expansion rate of spacetime when the system's current patterns formed
+
+**Velocity term:** -2.690 log₁₀(v)
+- Logarithmic negative relationship between characteristic velocity and memory retention
+- Faster motion erases memory patterns more rapidly
+- Dominates most astrophysical systems
+
+**Universal baseline:** 10.188
+- Fundamental memory formation constant across all physical scales
+- Base level of memory persistence in spacetime fabric
+
+The law reveals that every physical system's memory decay rate encodes three pieces of information: its complexity, 
+the cosmic expansion rate when it formed, and its characteristic motion scale. Alpha serves as a universal fingerprint of how systems interact with evolving spacetime.
 
 ---
 
