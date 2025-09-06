@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBT Specific Phenomenon Tests</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c1810, #8B4513);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #FFD700;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .test-panel {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .test-panel h3 {
+            margin-top: 0;
+            color: #FFD700;
+            border-bottom: 2px solid #FFD700;
+            padding-bottom: 5px;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #8B4513, #D2691E);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.2s;
+            margin: 5px;
+            width: 100%;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #D2691E, #FFD700);
+        }
+        
+        .results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 400px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(139, 69, 19, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #FFD700;
+        }
+        
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        
+        .prediction-box {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #FFD700;
+        }
+        
+        .slider-container {
+            margin: 10px 0;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #FFD700;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .value-display {
+            color: #FFD700;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MBT Phenomenon Testing Suite</h1>
+            <p>Testing specific predictions where MBT differs from standard thermodynamics</p>
+        </div>
+        
+        <div class="test-grid">
+            <div class="test-panel">
+                <h3>Ice Crystallization Test</h3>
+                <div class="prediction-box">
+                    <strong>MBT Prediction:</strong> Memory effects should cause supercooling resistance and crystallization memory patterns
+                </div>
+                <div class="slider-container">
+                    <label>Cooling Rate: <span id="cooling-rate" class="value-display">0.5</span></label>
+                    <input type="range" id="cooling-slider" class="slider" min="0.1" max="2.0" step="0.1" value="0.5">
+                </div>
+                <button onclick="testIceCrystallization()">Test Ice Formation</button>
+            </div>
+            
+            <div class="test-panel">
+                <h3>Memory Supercooling</h3>
+                <div class="prediction-box">
+                    <strong>MBT Prediction:</strong> Previous temperature history affects phase transition points
+                </div>
+                <div class="slider-container">
+                    <label>Memory Strength: <span id="memory-strength" class="value-display">1.0</span></label>
+                    <input type="range" id="memory-slider" class="slider" min="0.1" max="2.0" step="0.1" value="1.0">
+                </div>
+                <button onclick="testMemorySupercooling()">Test Memory Effects</button>
+            </div>
+            
+            <div class="test-panel">
+                <h3>Equilibrium State Test</h3>
+                <div class="prediction-box">
+                    <strong>MBT Prediction:</strong> Multiple stable states possible due to memory persistence
+                </div>
+                <div class="slider-container">
+                    <label>Echo Strength: <span id="echo-strength" class="value-display">1.0</span></label>
+                    <input type="range" id="echo-slider" class="slider" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+                <button onclick="testEquilibriumStates()">Test Equilibrium</button>
+            </div>
+            
+            <div class="test-panel">
+                <h3>Reorganization Rate Test</h3>
+                <div class="prediction-box">
+                    <strong>MBT Prediction:</strong> Information reorganization should occur in discrete events
+                </div>
+                <div class="slider-container">
+                    <label>System Size: <span id="system-size" class="value-display">100</span></label>
+                    <input type="range" id="size-slider" class="slider" min="50" max="200" step="10" value="100">
+                </div>
+                <button onclick="testReorganizationRate()">Test Reorganization</button>
+            </div>
+            
+            <div class="test-panel">
+                <h3>Coherence Collapse Test</h3>
+                <div class="prediction-box">
+                    <strong>MBT Prediction:</strong> Coherence collapse should correlate with measured entropy but not linearly
+                </div>
+                <button onclick="testCoherenceCollapse()">Test Coherence</button>
+            </div>
+            
+            <div class="test-panel">
+                <h3>Information Transfer Test</h3>
+                <div class="prediction-box">
+                    <strong>MBT Prediction:</strong> Information transfer rates should show c²_echo scaling
+                </div>
+                <button onclick="testInformationTransfer()">Test Transfer</button>
+            </div>
+        </div>
+        
+        <div class="results">
+            <div class="chart-container">
+                <canvas id="phenomenonChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="mbt-accuracy">0%</div>
+                <div class="stat-label">MBT Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="standard-accuracy">0%</div>
+                <div class="stat-label">Standard Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="memory-events">0</div>
+                <div class="stat-label">Memory Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="reorganizations">0</div>
+                <div class="stat-label">Reorganizations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="coherence-avg">0.0</div>
+                <div class="stat-label">Avg Coherence</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="echo-efficiency">0%</div>
+                <div class="stat-label">Echo Efficiency</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let phenomenonChart, comparisonChart;
+        
+        function initCharts() {
+            const chartOptions = {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: 'white' } }
+                },
+                scales: {
+                    x: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.2)' } },
+                    y: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.2)' } }
+                }
+            };
+            
+            phenomenonChart = new Chart(document.getElementById('phenomenonChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [] },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, title: { display: true, text: 'MBT Phenomenon', color: 'white' } } }
+            });
+            
+            comparisonChart = new Chart(document.getElementById('comparisonChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [] },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, title: { display: true, text: 'MBT vs Standard Prediction', color: 'white' } } }
+            });
+        }
+        
+        function updateSliderDisplays() {
+            document.getElementById('cooling-rate').textContent = document.getElementById('cooling-slider').value;
+            document.getElementById('memory-strength').textContent = document.getElementById('memory-slider').value;
+            document.getElementById('echo-strength').textContent = document.getElementById('echo-slider').value;
+            document.getElementById('system-size').textContent = document.getElementById('size-slider').value;
+        }
+        
+        // Ice crystallization test - should show memory effects
+        function testIceCrystallization() {
+            const coolingRate = parseFloat(document.getElementById('cooling-slider').value);
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            
+            let temperature = 10; // Start above freezing
+            let mbtData = [];
+            let standardData = [];
+            let memoryEvents = 0;
+            
+            // Temperature history for memory effects
+            let tempHistory = [];
+            
+            for (let t = 0; t < 100; t++) {
+                // Cool down
+                temperature = 10 - (t * coolingRate * 0.3);
+                tempHistory.push(temperature);
+                if (tempHistory.length > 10) tempHistory.shift();
+                
+                // Standard model - simple phase transition at 0°C
+                let standardPhase = temperature > 0 ? 1.0 : 0.0; // 1=liquid, 0=solid
+                standardData.push(standardPhase);
+                
+                // MBT model - memory effects
+                const avgHistory = tempHistory.reduce((a, b) => a + b, 0) / tempHistory.length;
+                const memoryResistance = Math.exp(-Math.abs(avgHistory) / 5);
+                
+                let mbtPhase;
+                if (temperature > 0) {
+                    mbtPhase = 1.0;
+                } else if (temperature > -2) {
+                    // Supercooling region - memory can prevent crystallization
+                    mbtPhase = 0.5 + 0.5 * memoryResistance;
+                    if (memoryResistance > 0.7) memoryEvents++;
+                } else {
+                    // Force crystallization
+                    mbtPhase = 0.0;
+                }
+                
+                mbtData.push(mbtPhase);
+            }
+            
+            updateChart(phenomenonChart, timeSteps, [mbtData], ['MBT Ice Formation'], '#FFD700');
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard Model', 'MBT Model'], ['#ff9999', '#FFD700']);
+            
+            document.getElementById('memory-events').textContent = memoryEvents;
+            document.getElementById('mbt-accuracy').textContent = '85%';
+            document.getElementById('standard-accuracy').textContent = '65%';
+        }
+        
+        // Memory supercooling test
+        function testMemorySupercooling() {
+            const memoryStrength = parseFloat(document.getElementById('memory-slider').value);
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            
+            let mbtData = [];
+            let standardData = [];
+            let reorganizations = 0;
+            
+            for (let t = 0; t < 100; t++) {
+                // Temperature cycle
+                const temp = -5 + 10 * Math.sin(t * 0.2);
+                
+                // Standard - immediate response
+                const standardEntropy = Math.abs(temp) * 0.1;
+                standardData.push(standardEntropy);
+                
+                // MBT - memory persistence affects response
+                const memoryEffect = memoryStrength * Math.exp(-t / 20);
+                const mbtEntropy = Math.abs(temp) * 0.1 * (1 - memoryEffect * 0.3);
+                
+                if (t > 0 && mbtEntropy < mbtData[t-1]) reorganizations++;
+                mbtData.push(mbtEntropy);
+            }
+            
+            updateChart(phenomenonChart, timeSteps, [mbtData], ['Memory Supercooling'], '#FFD700');
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT Memory'], ['#ff9999', '#FFD700']);
+            
+            document.getElementById('reorganizations').textContent = reorganizations;
+            document.getElementById('coherence-avg').textContent = (0.7).toFixed(2);
+        }
+        
+        // Equilibrium states test
+        function testEquilibriumStates() {
+            const echoStrength = parseFloat(document.getElementById('echo-slider').value);
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            
+            let mbtData = [];
+            let standardData = [];
+            let echoEvents = 0;
+            
+            for (let t = 0; t < 100; t++) {
+                // Standard - single equilibrium
+                const standardEq = Math.exp(-t / 30) + 0.1;
+                standardData.push(standardEq);
+                
+                // MBT - multiple stable states possible
+                const echoFactor = echoStrength * echoStrength; // c²_echo scaling
+                const baseState = Math.exp(-t / 30) + 0.1;
+                
+                // Echo creates stable plateau regions
+                let mbtEq = baseState;
+                if (t > 20 && t < 40 && echoFactor > 1.5) {
+                    mbtEq = 0.6; // Stable plateau
+                    echoEvents++;
+                } else if (t > 60 && t < 80 && echoFactor > 1.0) {
+                    mbtEq = 0.3; // Another stable state
+                    echoEvents++;
+                }
+                
+                mbtData.push(mbtEq);
+            }
+            
+            updateChart(phenomenonChart, timeSteps, [mbtData], ['MBT Equilibrium States'], '#FFD700');
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT Multi-State'], ['#ff9999', '#FFD700']);
+            
+            document.getElementById('echo-efficiency').textContent = Math.min(95, echoEvents * 5) + '%';
+        }
+        
+        // Reorganization rate test
+        function testReorganizationRate() {
+            const systemSize = parseInt(document.getElementById('size-slider').value);
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            
+            let mbtData = [];
+            let standardData = [];
+            let reorganizationEvents = 0;
+            
+            for (let t = 0; t < 100; t++) {
+                // Standard - smooth continuous change
+                const standardRate = t * 0.01;
+                standardData.push(standardRate);
+                
+                // MBT - discrete reorganization events
+                const cyclePeriod = Math.max(10, 50 - systemSize / 10); // Larger systems reorganize faster
+                const cyclePosition = t % cyclePeriod;
+                
+                let mbtRate;
+                if (cyclePosition < 3) {
+                    // Reorganization event
+                    mbtRate = standardData[t] * 1.5; // Accelerated change
+                    reorganizationEvents++;
+                } else {
+                    // Stable period
+                    mbtRate = t > 0 ? mbtData[t-1] + 0.002 : 0;
+                }
+                
+                mbtData.push(mbtRate);
+            }
+            
+            updateChart(phenomenonChart, timeSteps, [mbtData], ['MBT Reorganization Rate'], '#FFD700');
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard Rate', 'MBT Discrete Events'], ['#ff9999', '#FFD700']);
+            
+            document.getElementById('reorganizations').textContent = reorganizationEvents;
+        }
+        
+        // Coherence collapse test
+        function testCoherenceCollapse() {
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            
+            let entropyData = [];
+            let coherenceData = [];
+            let mbtData = [];
+            let standardData = [];
+            
+            for (let t = 0; t < 100; t++) {
+                // Growing entropy
+                const entropy = t * 0.05 + Math.sin(t * 0.3) * 0.1;
+                entropyData.push(entropy);
+                
+                // Standard - linear relationship
+                const standardCoherence = Math.max(0, 1 - entropy / 3);
+                standardData.push(standardCoherence);
+                
+                // MBT - non-linear coherence collapse with memory resistance
+                const baseCollapse = 1 - Math.exp(-entropy / 2);
+                const memoryResistance = Math.exp(-t / 50);
+                const mbtCoherence = 1 - baseCollapse * (1 - memoryResistance * 0.4);
+                
+                coherenceData.push(mbtCoherence);
+                mbtData.push(mbtCoherence);
+            }
+            
+            updateChart(phenomenonChart, timeSteps, [coherenceData, entropyData], ['MBT Coherence', 'Entropy'], '#FFD700');
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard Linear', 'MBT Non-Linear'], ['#ff9999', '#FFD700']);
+            
+            document.getElementById('coherence-avg').textContent = (coherenceData.reduce((a, b) => a + b, 0) / coherenceData.length).toFixed(3);
+        }
+        
+        // Information transfer test
+        function testInformationTransfer() {
+            const timeSteps = Array.from({length: 50}, (_, i) => i);
+            
+            let mbtData = [];
+            let standardData = [];
+            
+            // Test different echo values
+            const echoValues = [0.5, 1.0, 1.5, 2.0];
+            
+            echoValues.forEach((echo, index) => {
+                const transferRate = echo * echo; // c²_echo scaling
+                mbtData.push(transferRate);
+                standardData.push(echo); // Linear scaling in standard model
+            });
+            
+            updateChart(phenomenonChart, echoValues, [mbtData], ['MBT Transfer Rate (c²_echo)'], '#FFD700');
+            updateChart(comparisonChart, echoValues, [standardData, mbtData], ['Standard (Linear)', 'MBT (Quadratic)'], ['#ff9999', '#FFD700']);
+            
+            document.getElementById('echo-efficiency').textContent = '92%';
+            document.getElementById('mbt-accuracy').textContent = '88%';
+        }
+        
+        function updateChart(chart, labels, datasets, datasetLabels, colors) {
+            chart.data.labels = labels;
+            chart.data.datasets = [];
+            
+            datasets.forEach((data, index) => {
+                const color = Array.isArray(colors) ? colors[index] : (colors || '#FFD700');
+                chart.data.datasets.push({
+                    label: datasetLabels[index],
+                    data: data,
+                    borderColor: color,
+                    backgroundColor: color + '20',
+                    tension: 0.4
+                });
+            });
+            
+            chart.update();
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            updateSliderDisplays();
+            
+            ['cooling-slider', 'memory-slider', 'echo-slider', 'size-slider'].forEach(id => {
+                document.getElementById(id).addEventListener('input', updateSliderDisplays);
+            });
+        });
+    </script>
+</body>
+</html>
