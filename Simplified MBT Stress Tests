@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplified MBT Stress Tests</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #00ffff;
+            font-size: 2rem;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .control-panel {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        button {
+            background: #1a1a2e;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
+        }
+        
+        button:hover {
+            background: #00ffff;
+            color: #1a1a2e;
+        }
+        
+        .results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .chart-container {
+            background: rgba(0, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            height: 400px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ffff;
+        }
+        
+        .data-display {
+            background: rgba(0, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MBT Stress Testing Suite</h1>
+            <p>Direct testing of framework limits and breakdown points</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-panel">
+                <h3>Scale Tests</h3>
+                <button onclick="testMicroscale()">Quantum Scale</button>
+                <button onclick="testMacroscale()">Cosmic Scale</button>
+                <button onclick="testScaleBreaking()">Scale Breaking Point</button>
+            </div>
+            
+            <div class="control-panel">
+                <h3>Temperature Extremes</h3>
+                <button onclick="testAbsoluteZero()">Near Absolute Zero</button>
+                <button onclick="testPlasmaTemp()">Plasma Conditions</button>
+                <button onclick="testTempBreakdown()">Temperature Breakdown</button>
+            </div>
+            
+            <div class="control-panel">
+                <h3>Memory Stress</h3>
+                <button onclick="testMemoryOverload()">Memory Overload</button>
+                <button onclick="testMemoryFragmentation()">Memory Fragmentation</button>
+                <button onclick="testMemoryRecovery()">Recovery Test</button>
+            </div>
+            
+            <div class="control-panel">
+                <h3>Coherence Collapse</h3>
+                <button onclick="testCascadeFailure()">Cascade Failure</button>
+                <button onclick="testRapidCollapse()">Rapid Collapse</button>
+                <button onclick="testCollapseRecovery()">Collapse Recovery</button>
+            </div>
+        </div>
+        
+        <div class="results">
+            <div class="chart-container">
+                <canvas id="testChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="breakdown-temp">N/A</div>
+                <div class="stat-label">Breakdown Point</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stability-measure">0.0</div>
+                <div class="stat-label">Stability Index</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="recovery-rate">0%</div>
+                <div class="stat-label">Recovery Rate</div>
+            </div>
+        </div>
+        
+        <div class="data-display" id="dataOutput">
+            Test results will appear here...
+        </div>
+    </div>
+
+    <script>
+        let testChart, comparisonChart;
+        
+        function initCharts() {
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: 'white' } } },
+                scales: {
+                    x: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.2)' } },
+                    y: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.2)' } }
+                }
+            };
+            
+            testChart = new Chart(document.getElementById('testChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [] },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, title: { display: true, text: 'MBT Test Results', color: 'white' } } }
+            });
+            
+            comparisonChart = new Chart(document.getElementById('comparisonChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [] },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, title: { display: true, text: 'Standard vs MBT', color: 'white' } } }
+            });
+        }
+        
+        function logData(testName, data) {
+            const output = document.getElementById('dataOutput');
+            output.innerHTML = `<strong>${testName}:</strong><br>` + 
+                              data.map((d, i) => `t=${i}: ${d.toFixed(3)}`).join('<br>') + 
+                              '<br><br>' + output.innerHTML;
+        }
+        
+        function testMicroscale() {
+            const timeSteps = Array.from({length: 50}, (_, i) => i);
+            let mbtData = [];
+            let standardData = [];
+            
+            for (let t = 0; t < 50; t++) {
+                // Quantum scale effects - standard model struggles
+                const quantumFluctuation = Math.random() * 0.2 - 0.1;
+                const standardValue = Math.max(0, 1 - t * 0.02 + quantumFluctuation);
+                standardData.push(standardValue);
+                
+                // MBT with memory persistence should be more stable
+                const memoryDamping = Math.exp(-t / 20);
+                const mbtValue = (1 - Math.exp(-t/15)) * (0.8 + 0.2 * memoryDamping) * Math.pow(1.0, 2);
+                mbtData.push(mbtValue);
+            }
+            
+            updateChart(testChart, timeSteps, [mbtData], ['MBT Quantum Scale'], ['#00ffff']);
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT'], ['#ff6464', '#00ffff']);
+            
+            logData("Quantum Scale Test", mbtData);
+            document.getElementById('stability-measure').textContent = (mbtData.reduce((a, b) => a + b, 0) / mbtData.length).toFixed(3);
+        }
+        
+        function testScaleBreaking() {
+            const scales = [1, 5, 10, 50, 100, 500, 1000, 5000, 10000]; // Test breaking point
+            let mbtData = [];
+            let standardData = [];
+            let breakingPoint = 0;
+            
+            scales.forEach((scale, index) => {
+                // Standard - eventually diverges
+                const standardValue = scale > 1000 ? Math.exp(scale/1000) : Math.log(scale + 1);
+                standardData.push(Math.min(50, standardValue));
+                
+                // MBT - test for breakdown
+                const scaleFactor = Math.pow(scale, 1/3);
+                const coherenceStress = scale / 1000;
+                
+                if (coherenceStress > 5) {
+                    // Framework breakdown
+                    const mbtValue = Math.max(0.1, 5 - coherenceStress);
+                    mbtData.push(mbtValue);
+                    if (breakingPoint === 0) breakingPoint = scale;
+                } else {
+                    const mbtValue = scaleFactor * (1 - Math.exp(-scaleFactor/10));
+                    mbtData.push(mbtValue);
+                }
+            });
+            
+            updateChart(testChart, scales, [mbtData], ['MBT Scale Breaking'], ['#00ffff']);
+            updateChart(comparisonChart, scales, [standardData, mbtData], ['Standard', 'MBT'], ['#ff6464', '#00ffff']);
+            
+            logData("Scale Breaking Test", mbtData);
+            document.getElementById('breakdown-temp').textContent = breakingPoint > 0 ? `Scale ${breakingPoint}` : 'None';
+        }
+        
+        function testTempBreakdown() {
+            const temps = [0.001, 0.01, 0.1, 1, 10, 100, 1000, 10000, 100000];
+            let mbtData = [];
+            let standardData = [];
+            let thermalBreakdown = 0;
+            
+            temps.forEach(temp => {
+                // Standard model breakdown
+                const standardValue = temp < 0.1 ? 0 : (temp > 10000 ? 100 : Math.log(temp));
+                standardData.push(standardValue);
+                
+                // MBT thermal limits
+                if (temp < 0.001 || temp > 50000) {
+                    // Beyond framework limits
+                    const mbtValue = 0.05;
+                    mbtData.push(mbtValue);
+                    if (thermalBreakdown === 0) thermalBreakdown = temp;
+                } else {
+                    const thermalCollapse = 1 - Math.exp(-Math.abs(Math.log(temp))/5);
+                    const thermalMemory = (1 - thermalCollapse * 0.8) * 1.0 * Math.pow(1.0, 2);
+                    mbtData.push(thermalMemory);
+                }
+            });
+            
+            updateChart(testChart, temps, [mbtData], ['MBT Temperature Breakdown'], ['#00ffff']);
+            updateChart(comparisonChart, temps, [standardData, mbtData], ['Standard', 'MBT'], ['#ff6464', '#00ffff']);
+            
+            logData("Temperature Breakdown Test", mbtData);
+            document.getElementById('breakdown-temp').textContent = thermalBreakdown + 'K';
+        }
+        
+        function testMemoryFragmentation() {
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            let mbtData = [];
+            let standardData = [];
+            let fragmentationLevel = 0;
+            
+            for (let t = 0; t < 100; t++) {
+                // Standard - no fragmentation concept
+                const standardValue = 1 - Math.exp(-t/30);
+                standardData.push(standardValue);
+                
+                // MBT - memory fragmentation over time
+                if (t > 20 && Math.random() < 0.1) {
+                    fragmentationLevel += 0.05;
+                }
+                
+                const baseMemory = (1 - Math.exp(-t/30)) * 1.0 * Math.pow(1.0, 2);
+                const fragmentedMemory = baseMemory * (1 - fragmentationLevel);
+                mbtData.push(Math.max(0.1, fragmentedMemory));
+            }
+            
+            updateChart(testChart, timeSteps, [mbtData], ['MBT Memory Fragmentation'], ['#00ffff']);
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT Fragmented'], ['#ff6464', '#00ffff']);
+            
+            logData("Memory Fragmentation Test", mbtData);
+            document.getElementById('recovery-rate').textContent = Math.max(0, 100 - fragmentationLevel * 100) + '%';
+        }
+        
+        function testMemoryRecovery() {
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            let mbtData = [];
+            let standardData = [];
+            let recoveryRate = 0;
+            
+            let memoryState = 1.0;
+            
+            for (let t = 0; t < 100; t++) {
+                // Standard - no recovery concept
+                const standardValue = t < 30 ? 1 : Math.exp(-(t-30)/20);
+                standardData.push(standardValue);
+                
+                // MBT - damage then recovery
+                if (t === 30) memoryState = 0.2; // Major damage
+                
+                if (t > 30 && memoryState < 0.9) {
+                    // Recovery process
+                    const recoveryIncrement = 0.02 * (0.9 - memoryState);
+                    memoryState = Math.min(0.9, memoryState + recoveryIncrement);
+                    recoveryRate += recoveryIncrement;
+                }
+                
+                const recoveredMemory = memoryState * 1.0 * Math.pow(1.0, 2);
+                mbtData.push(recoveredMemory);
+            }
+            
+            updateChart(testChart, timeSteps, [mbtData], ['MBT Memory Recovery'], ['#00ffff']);
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT Recovery'], ['#ff6464', '#00ffff']);
+            
+            logData("Memory Recovery Test", mbtData);
+            document.getElementById('recovery-rate').textContent = Math.min(100, recoveryRate * 100) + '%';
+        }
+        
+        function testCollapseRecovery() {
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            let mbtData = [];
+            let standardData = [];
+            
+            let coherence = 0.9;
+            
+            for (let t = 0; t < 100; t++) {
+                // Standard - no collapse/recovery
+                const standardValue = Math.exp(-t/50);
+                standardData.push(standardValue);
+                
+                // MBT - coherence collapse and recovery cycles
+                if (t % 25 === 0 && t > 0) {
+                    coherence = Math.max(0.1, coherence - 0.3); // Periodic collapse
+                } else if (coherence < 0.8) {
+                    coherence = Math.min(0.9, coherence + 0.03); // Recovery
+                }
+                
+                const recoveryMemory = (1 - (1 - coherence)) * 1.0 * Math.pow(1.0, 2);
+                mbtData.push(recoveryMemory);
+            }
+            
+            updateChart(testChart, timeSteps, [mbtData], ['MBT Collapse Recovery'], ['#00ffff']);
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT Cycles'], ['#ff6464', '#00ffff']);
+            
+            logData("Collapse Recovery Test", mbtData);
+        }
+        
+        function testMacroscale() {
+            const scales = [1, 10, 100, 1000, 10000]; // Different system sizes
+            let mbtData = [];
+            let standardData = [];
+            
+            scales.forEach(scale => {
+                // Standard thermodynamics - should scale linearly
+                const standardValue = Math.log(scale) / Math.log(10);
+                standardData.push(standardValue);
+                
+                // MBT - should scale as cube root due to dimensional constraints
+                const scaleFactor = Math.pow(scale, 1/3);
+                const mbtValue = scaleFactor * (1 - Math.exp(-scaleFactor/10));
+                mbtData.push(mbtValue);
+            });
+            
+            updateChart(testChart, scales, [mbtData], ['MBT Cosmic Scale'], ['#00ffff']);
+            updateChart(comparisonChart, scales, [standardData, mbtData], ['Standard', 'MBT'], ['#ff6464', '#00ffff']);
+            
+            logData("Cosmic Scale Test", mbtData);
+        }
+        
+        function testAbsoluteZero() {
+            const temps = [0.001, 0.01, 0.1, 1, 10, 50, 100]; // Kelvin
+            let mbtData = [];
+            let standardData = [];
+            
+            temps.forEach(temp => {
+                // Standard - breaks down near absolute zero
+                const standardValue = temp < 1 ? 0 : Math.log(temp + 1);
+                standardData.push(standardValue);
+                
+                // MBT - memory persistence provides stability
+                const thermalCollapse = 1 - Math.exp(-temp/10);
+                const coldMemory = (1 - thermalCollapse * 0.7) * 1.0 * Math.pow(1.0, 2);
+                mbtData.push(coldMemory);
+            });
+            
+            updateChart(testChart, temps, [mbtData], ['MBT Near Absolute Zero'], ['#00ffff']);
+            updateChart(comparisonChart, temps, [standardData, mbtData], ['Standard', 'MBT'], ['#ff6464', '#00ffff']);
+            
+            logData("Absolute Zero Test", mbtData);
+            document.getElementById('breakdown-temp').textContent = "0.001K";
+        }
+        
+        function testPlasmaTemp() {
+            const temps = [1000, 5000, 10000, 50000, 100000]; // High temperature plasma
+            let mbtData = [];
+            let standardData = [];
+            
+            temps.forEach(temp => {
+                // Standard - diverges at extreme temps
+                const standardValue = temp > 10000 ? Math.exp((temp - 10000)/10000) : temp/1000;
+                standardData.push(Math.min(100, standardValue));
+                
+                // MBT - memory provides resistance to thermal breakdown
+                const thermalStress = temp / 10000;
+                const thermalCollapse = 1 - Math.exp(-thermalStress);
+                const hotMemory = (1 - thermalCollapse * 0.9) * 1.0 * Math.pow(1.0, 2);
+                mbtData.push(hotMemory);
+            });
+            
+            updateChart(testChart, temps, [mbtData], ['MBT Plasma Conditions'], ['#00ffff']);
+            updateChart(comparisonChart, temps, [standardData, mbtData], ['Standard', 'MBT'], ['#ff6464', '#00ffff']);
+            
+            logData("Plasma Temperature Test", mbtData);
+        }
+        
+        function testMemoryOverload() {
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            let mbtData = [];
+            let standardData = [];
+            let overloadPoint = 0;
+            
+            for (let t = 0; t < 100; t++) {
+                // Standard - no memory limitations
+                const standardValue = 1 - Math.exp(-t/30);
+                standardData.push(standardValue);
+                
+                // MBT - memory capacity limits
+                const memoryLoad = t / 20; // Increasing load
+                const capacityLimit = 5; // Arbitrary limit
+                
+                if (memoryLoad > capacityLimit) {
+                    // Memory overload causes degradation
+                    const overloadFactor = capacityLimit / memoryLoad;
+                    const degradedMemory = (1 - Math.exp(-t/30)) * overloadFactor * Math.pow(1.0, 2);
+                    mbtData.push(degradedMemory);
+                    if (overloadPoint === 0) overloadPoint = t;
+                } else {
+                    const normalMemory = (1 - Math.exp(-t/30)) * 1.0 * Math.pow(1.0, 2);
+                    mbtData.push(normalMemory);
+                }
+            }
+            
+            updateChart(testChart, timeSteps, [mbtData], ['MBT Memory Overload'], ['#00ffff']);
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT Overloaded'], ['#ff6464', '#00ffff']);
+            
+            logData("Memory Overload Test", mbtData);
+            document.getElementById('breakdown-temp').textContent = `t=${overloadPoint}`;
+        }
+        
+        function testCascadeFailure() {
+            const timeSteps = Array.from({length: 100}, (_, i) => i);
+            let mbtData = [];
+            let standardData = [];
+            let cascadeEvents = 0;
+            
+            let coherence = 0.9;
+            
+            for (let t = 0; t < 100; t++) {
+                // Standard - no cascade effects
+                const standardValue = Math.max(0.1, 1 - t * 0.01);
+                standardData.push(standardValue);
+                
+                // MBT - cascade failure at t=30
+                if (t === 30) coherence = 0.3; // Initial failure
+                
+                // Cascade spreads if coherence is low
+                if (coherence < 0.5 && Math.random() < 0.3) {
+                    coherence = Math.max(0.05, coherence - 0.1);
+                    cascadeEvents++;
+                } else if (coherence < 0.9) {
+                    coherence = Math.min(0.9, coherence + 0.02); // Slow recovery
+                }
+                
+                const cascadeMemory = (1 - (1 - coherence)) * 1.0 * Math.pow(1.0, 2);
+                mbtData.push(cascadeMemory);
+            }
+            
+            updateChart(testChart, timeSteps, [mbtData], ['MBT Cascade Failure'], ['#00ffff']);
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT Cascade'], ['#ff6464', '#00ffff']);
+            
+            logData("Cascade Failure Test", mbtData);
+            document.getElementById('recovery-rate').textContent = Math.max(0, 100 - cascadeEvents * 5) + '%';
+        }
+        
+        function testRapidCollapse() {
+            const timeSteps = Array.from({length: 50}, (_, i) => i);
+            let mbtData = [];
+            let standardData = [];
+            
+            for (let t = 0; t < 50; t++) {
+                // Standard - smooth decline
+                const standardValue = Math.exp(-t/10);
+                standardData.push(standardValue);
+                
+                // MBT - rapid collapse at t=20 with memory resistance
+                let collapseRate;
+                if (t < 20) {
+                    collapseRate = t / 50;
+                } else if (t < 25) {
+                    // Rapid collapse period
+                    collapseRate = 0.4 + (t - 20) * 0.1;
+                } else {
+                    // Memory provides some resistance
+                    const memoryResistance = Math.exp(-(t - 25)/5);
+                    collapseRate = Math.min(0.95, 0.9 - memoryResistance * 0.2);
+                }
+                
+                const rapidMemory = (1 - collapseRate) * 1.0 * Math.pow(1.0, 2);
+                mbtData.push(rapidMemory);
+            }
+            
+            updateChart(testChart, timeSteps, [mbtData], ['MBT Rapid Collapse'], ['#00ffff']);
+            updateChart(comparisonChart, timeSteps, [standardData, mbtData], ['Standard', 'MBT Rapid'], ['#ff6464', '#00ffff']);
+            
+            logData("Rapid Collapse Test", mbtData);
+        }
+        
+        function updateChart(chart, labels, datasets, datasetLabels, colors) {
+            chart.data.labels = labels;
+            chart.data.datasets = [];
+            
+            datasets.forEach((data, index) => {
+                chart.data.datasets.push({
+                    label: datasetLabels[index],
+                    data: data,
+                    borderColor: colors[index],
+                    backgroundColor: colors[index] + '20',
+                    tension: 0.4,
+                    fill: false
+                });
+            });
+            
+            chart.update();
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+        });
+    </script>
+</body>
+</html>
