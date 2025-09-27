@@ -89,39 +89,5 @@ The second breakthrough models the **origin of life itself** as a natural phase 
 
 
 
-## 💡 Why This Matters
 
-
-
-This repository lays the groundwork for:
-
-- A unified framework of **mathematics, biology, and consciousness**
-
-- A new way to define *observation*, *emergence*, and *prediction*
-
-- Testable predictions about where life can form, and where mathematics “ends”
-
-
-
----
-## 👤 Attribution
-
-All discoveries © Martin Ollett  
-
-Co-developed with Claude, ChatGPT (OpenAI) — MBT research support and translation
-
-
-## 📜 License
-
-
-
-MIT License — use freely, but attribution is required.  
-
-If this framework supports your world, game, simulation, or system:  
-
-**Please include “Powered by MBT — © Martin Ollett”** somewhere in your credits.
-
-
-
----
 
