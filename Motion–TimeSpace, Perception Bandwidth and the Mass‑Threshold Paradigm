@@ -1,0 +1,158 @@
+
+Abstract
+
+Modern physics excels at describing matter, energy and spacetime but still lacks a coherent physical account of informational capacity—the ability of a system to register, retain and react to change. 
+Concepts such as “consciousness,” “perception” or “information processing” are often treated as emergent epiphenomena, disconnected from the fundamental laws that govern motion and energy. 
+This white paper synthesises two lines of inquiry that help close this gap:
+(1) the Motion–TimeSpace (MBT) framework, which posits motion as the fundamental condition from which space, time, curvature, memory and energy emerge, and introduces physically defined metrics of perception bandwidth and causal power; and
+(2) a galaxy mass‑threshold analysis, which demonstrates that the apparently strong correlation between gas fraction and the radial mass‑growth exponent m in spiral galaxies is not causal but instead a consequence of galaxy mass.
+We show that MBT’s perception bandwidth provides a more general measure of a system’s informational capacity than any “consciousness ruler,” while the mass‑threshold analysis identifies a critical baryonic mass,
+(~5×10^9 M_⊙) 
+above which galaxies achieve a universal mass‑growth exponent m≈1.878. Finally, 
+we survey critiques of prevailing measures of consciousness—integrated information and mirror self‑recognition—and argue that perception bandwidth offers a physically grounded alternative for quantifying awareness across physical and biological systems.
+
+1 Introduction
+
+Physics describes how matter and energy evolve, yet it often leaves out the informational aspect of physical systems.
+Terms like consciousness, perception and awareness are relegated to emergent phenomena at higher levels of complexity.
+Measurements of consciousness are notoriously fraught: Giulio Tononi’s Integrated Information Theory (IIT) equates consciousness with integrated information Φ [1], 
+but critics argue that IIT is vulnerable to thought‑experiments such as fading/dancing qualia, in which gradual replacement of neurons with functionally identical machines leads to implausible predictions[2]. 
+Even simple circuits (e.g., large grids of XOR gates) can generate arbitrarily high Φ , implying that “intuitively non‑conscious systems can generate large values of Φ ”[3]. 
+Behavioural tests, such as the mirror self‑recognition (MSR) test, are likewise problematic:
+passing the mark test may only demonstrate bodily self‑awareness rather than complex psychological self‑awareness[4], and cross‑cultural studies show that many non‑Western children fail the test despite developing normally[5].
+These issues highlight the absence of an agreed‑upon “ruler” for consciousness.
+
+On astrophysical scales, observational astronomy faces a similar puzzle. Analyses of rotation curves from the SPARC database have shown that the cumulative mass profile M(r) of disc galaxies follows a power law M(r)∝r^m .
+The exponent m clusters tightly around a “universal” value of pprox 1.878 , with significant scatter among low‑mass, 
+gas‑rich dwarfs and less scatter among high‑mass spirals. Our earlier work correlated gas fraction with m and found a strong negative correlation, 
+but subsequent tests revealed that the correlation vanishes when galaxies are grouped by stellar mass. This suggests that galaxy mass, not gas content, controls the exponent.
+This white paper aims to:
+
+	Present the MTS framework and its physically defined metrics perception bandwidth and causal power as alternatives to ill‑defined notions of consciousness.
+	Summarise the mass‑threshold analysis of galaxy rotation curves and demonstrate that a critical baryonic mass governs the convergence of m to 1.878.
+	Review empirical and theoretical critiques of popular consciousness metrics (IIT and MSR) and relate them to the need for physically grounded measures.
+	Propose perception bandwidth as a unified metric for quantifying informational capacity across scales—from fundamental particles to galaxies and potentially to cognitive systems.
+
+2 Motion–TimeSpace and Physical Metrics of Awareness
+
+2.1 Overview of MBT
+
+In the Motion–TimeSpace (MTS) framework, motion is taken as the foundational condition of existence; space, time and curvature emerge from gradients of motion across a discrete quantum “sheet”. 
+Memory and curvature resistance accompany motion: resistance to curvature gives rise to what we perceive as mass and gravity, 
+while memory stores the history of motion and allows for the accumulation of curvature information. Unlike conventional models,
+MBT does not treat perception or information processing as emergent mental phenomena; rather, it derives them from the physical dynamics of motion.
+
+2.2 Perception bandwidth and causal power
+
+MTS introduces two system‑level properties:
+
+Perception bandwidth (B_p ) quantifies the range of curvature‑encoded changes a system can detect and respond to.
+At a qualitative level, B_p increases with the system’s sensitivity to curvature gradients (analogous to sensory acuity) and with its memory coefficient (how long curvature signals are retained). Mathematically,
+B_p is defined as an integral over a world‑sheet surface of the local curvature gradient weighted by memory and attenuation functions.
+Thus, a galaxy with a diffuse halo may have a high perception bandwidth for gravitational curvature, while a biological neuron may have a high bandwidth for electrochemical curvature changes.
+	Causal power (C ) measures how much a system can influence motion fields in its surroundings.
+C is proportional to the momentum flux through the boundaries of a system and incorporates a feedback term from curvature. 
+A system with high causal power can reshape the motion‑curvature landscape around it, e.g., a massive star curving spacetime or a neuron firing to propagate action potentials.
+These metrics arise directly from the same motion–curvature dynamics that produce gravity, 
+particle structure and cosmic expansion. They embed information processing capacity within physical law rather than requiring the invocation of subjective consciousness. 
+A key consequence is that information capacity becomes a physical invariant, allowing one to compare disparate systems—atoms, brains or galaxies—using the same metrics.
+3 Mass–Growth Exponent and the Critical Mass of Galaxies
+
+3.1 Dataset and analysis
+
+Our analysis used 23 disc galaxies: 19 from the SPARC catalogue and four additional dwarfs with HI masses derived from external surveys. 
+For each galaxy we computed the stellar mass (M_* ), helium‑corrected gas mass (M_mgas ) and total baryonic mass (M_b=M_*+M_mgas ).
+The mass‑growth exponent m was determined by fitting the cumulative mass profile M(r)∝r^m using rotation curves. 
+Plotting m against gas fraction showed a significant negative correlation for the full sample, but this correlation disappeared when the sample was split at the median stellar mass,
+suggesting that mass—not gas fraction—is the primary driver. To test this, we plotted m versus baryonic mass and searched for a threshold mass.
+
+3.2 Results: a critical baryonic mass
+
+Figure 1 plots m against total baryonic mass. Galaxies with M_b≲0.5imes10^10 M_⊙ (three objects) have low exponents m≲1.8 and large scatter, whereas galaxies with M_b≳0.5imes10^10 M_⊙ cluster tightly around mpprox1.87 . 
+This suggests a transition mass of roughly 5imes10^9 M_⊙ . 
+The vanishing correlation within high‑mass and low‑mass subsamples (Pearson rpprox-0.08 and +0.07 , ppprox0.8 ) indicates that the gas fraction is merely a proxy for mass: low‑mass dwarfs are gas rich and high‑mass spirals are gas poor.
+A similar threshold emerges in cosmological simulations: hydrodynamical simulations show that the efficiency of supernova‑driven core formation peaks at a stellar‑to‑halo mass ratio M_* / M_{ m vir} pprox0.005 ,
+corresponding to M_*pprox10^8–10^9\,M_\odot [6]; below this ratio (M_*/M_mvir≲10^(-4) ), 
+baryonic feedback is unable to alter halo density profiles[7].
+Our threshold lies slightly above this simulation‑based value because we consider baryonic (gas + stars) rather than stellar mass alone and because we measure the asymptotic exponent rather than inner density slope.
+Figure 1. Mass‑growth exponent versus total baryonic mass. Low‑mass galaxies show low exponents m , while high‑mass galaxies cluster near the universal value mpprox1.878 . 
+The vertical dashed line marks the approximate transition mass 5imes10^9 M_⊙ . Data points include error bars reflecting uncertainties in m (±0.02) and baryonic mass (±10 %).
+ 
+
+3.3 Implications for galaxy evolution
+
+The mass‑threshold analysis reveals that gas fraction correlations are mass‑dependent tracers, not causal mechanisms.
+Low‑mass galaxies have high gas fractions because they retain a large fraction of their baryons in gaseous form and their shallow potentials impede star formation; high‑mass galaxies are gas poor because they convert gas into stars and have deeper potentials.
+Consequently, gas fraction and m are both consequences of mass. 
+The threshold mass demarcates a phase transition in gravitational structure: below  5imes10^9 M_⊙ galaxies are not fully virialised and display a range of exponents; above this mass they settle into an equilibrium state with mpprox1.878 . 
+This finding aligns with hydrodynamical simulations showing that significant halo core formation requires a minimum stellar mass[6].
+
+4 Critique of Conventional Consciousness Measures
+
+4.1 Integrated Information Theory (IIT)
+
+IIT proposes that consciousness corresponds to a system’s integrated information Φ . However, the claim that “consciousness is integrated information” has remained abstract across successive versions of IIT[8]. 
+Michael Cerullo’s critique highlights several problems:
+(i) no justification is given for the principle of information exclusion[8]; 
+(ii) thought experiments such as fading and dancing qualia show that replacing neurons with functionally identical machines leads IIT to predict sudden loss or bizarre oscillations of consciousness[2];  
+(iii) trivial networks of XOR gates can generate arbitrarily high Φ , implying that systems lacking subjective experience could score higher than the human brain[3]. 
+Aaronson and Tononi’s debate illustrates that intuitively non‑conscious systems can possess high Φ , demonstrating that IIT measures a kind of “proto‑consciousness” rather than the everyday notion of consciousness[9].
+
+4.2 Mirror self‑recognition (MSR) and its limitations
+
+The mirror test has long served as an empirical test of self‑recognition. 
+Yet numerous studies show that passing the mark test may reflect only bodily self‑awareness, requiring mirror correspondence and kinaesthetic–visual matching[4]. 
+The test’s ontogeny and cross‑species distribution are also limited: outside of great apes, convincing evidence of spontaneous MSR is lacking[10], 
+and cross‑cultural experiments reveal that children in many rural societies rarely pass the test[5]. 
+Even when animals are trained to pass the mark test, critics argue that the training does not necessarily imply psychological self‑awareness[11]. Thus, MSR cannot serve as a universal measure of consciousness.
+
+5 Perception Bandwidth as a Unified Metric
+
+The critiques above underline the difficulty of defining or measuring “consciousness.” MBT’s concept of perception bandwidth offers an alternative grounded in physics. 
+Rather than attempting to decide whether a system is conscious, we quantify how effectively it can detect and integrate curvature‑encoded changes. 
+This approach circumvents metaphysical debates and provides a continuous, quantitative metric applicable across scales:
+Atoms and molecules have narrow perception bandwidths confined to quantum fields; their causal power is small.
+Biological cells and neural networks have broader bandwidths for biochemical and electrical curvature signals.
+Neurons, for example, integrate signals over ~10 ms and respond to voltage gradients; their perception bandwidth can be expressed in terms of synaptic integration time and membrane potential thresholds.
+Galaxies possess extremely high perception bandwidths for gravitational curvature, integrating information over tens of kiloparsecs. Their causal power is dominated by mass and momentum flux: massive galaxies shape the curvature of the cosmic web.
+Unlike IIT or MSR, perception bandwidth does not attempt to assign binary labels of “conscious” or “non‑conscious.” It instead quantifies informational throughput in terms of physically measurable quantities—curvature gradients, 
+memory coefficients and momentum flux. Systems with higher bandwidths can register subtler curvature changes across longer timescales. 
+Causal power, meanwhile, quantifies their ability to influence motion fields. Together, these metrics enable comparison between disparate systems without resorting to subjective qualia.
+
+6 Discussion: Connecting Mass Thresholds and Perception Bandwidth
+
+The galaxy mass‑threshold analysis illustrates how physical systems undergo qualitative changes once a control parameter crosses a critical value.
+Below 5imes10^9 M_⊙ , galaxies remain gas rich and display diverse mass‑growth exponents; above it, they converge to a universal exponent.
+In MTS language, low‑mass galaxies have smaller perception bandwidths for gravitational curvature—insufficient to integrate their entire halo—while high‑mass galaxies possess wider bandwidths that allow them to “perceive” and equilibrate their curvature field. 
+Similarly, biological systems with limited sensory acuity cannot form comprehensive world models, 
+whereas those with larger bandwidths can integrate more information and develop complex behaviours. 
+Thus, threshold behaviour may be a common feature linking cosmological structure formation and information processing capacity.
+Furthermore, the astrophysical threshold corresponds to a regime where baryonic feedback becomes ineffective at altering dark‑matter profiles[6],
+reminiscent of a phase transition in which additional input energy (supernovae) no longer changes the system’s structure. 
+In cognitive systems, a comparable transition might occur when neural networks reach a critical size or connectivity that allows global integration of signals. 
+MTS suggests that such transitions are governed by the interplay between curvature gradients, memory retention and momentum flux; crossing the threshold expands the system’s perception bandwidth and causal power.
+
+7 Conclusion and Future Work
+This white paper integrates the Motion–TimeSpace framework with recent astrophysical analyses to show that physical metrics of awareness can replace ambiguous concepts of consciousness. 
+MTS defines perception bandwidth and causal power as physically grounded measures of informational capacity. 
+Our galaxy mass‑threshold study demonstrates that gas fraction is not a direct driver of the mass‑growth exponent but rather a consequence of mass; a transition at ∼5imes10^9 M_⊙ separates non‑equilibrated dwarfs from equilibrated spirals. 
+At the same time, critiques of IIT and mirror self‑recognition highlight the inadequacy of current “rulers” for consciousness[3][4]. 
+Perception bandwidth offers a unified, quantitative metric that can be applied from atomic scales to galaxies without invoking metaphysical assumptions.
+
+Future research should:
+
+Simulation analysis: Extract cumulative mass profiles M(r) from cosmological hydrodynamical simulations (e.g. IllustrisTNG) to verify whether the mass‑threshold behaviour appears in simulated galaxies.
+This requires computing the mass‑growth exponent for simulated discs and correlating it with total baryonic mass and gas fraction.
+Threshold refinement: Expand the observational sample by including more galaxies below 5imes10^9 M_⊙ using data from LITTLE THINGS, THINGS and WHISP surveys to characterise the width of the transition.
+Perception bandwidth measurements: Develop explicit formulae for B_p and C in astrophysical and biological contexts, and measure them in simulated systems to test MTS’s predictions. 
+In cognitive science, this may involve quantifying neural integration time and gradient sensitivity rather than seeking a consciousness “score.”
+By grounding informational capacity in motion dynamics and recognising the importance of mass thresholds, we can move towards a unified physical understanding of awareness that does not hinge on contested notions of consciousness.
+________________________________________
+[1] [2] [3] [8] [9]  The Problem with Phi: A Critique of Integrated Information Theory - PMC 
+https://pmc.ncbi.nlm.nih.gov/articles/PMC4574706/
+[4] [10] [11]  Wild recognition: conducting the mark test for mirror self-recognition on wild baboons - PMC 
+https://pmc.ncbi.nlm.nih.gov/articles/PMC11750390/
+[5] Mirror test - Wikipedia
+https://en.wikipedia.org/wiki/Mirror_test
+[6] [7] Small-Scale Challenges to the ΛCDM Paradigm - James S. Bullock et al.
+https://ned.ipac.caltech.edu/level5/Sept18/Bullock/Bullock3.html
