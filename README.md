@@ -56,8 +56,52 @@ They vary in tone — some technical, some humorous, some grandiose by design.
 They remain here as part of the creative research process.
 
 ### **5. Miscellaneous “Old Speculation” Series**
-A large collection of quick conceptual sketches, loose ideas,  
+A large collection of quick conceptual sketches, loose ideas,
 and aborted directions. These are preserved only for record-keeping and continuity.
+
+---
+
+## 🗂️ Repository Contents (Quick Index)
+
+This archive has grown through many small commits; the list below gives a quick
+orientation to the major documents and notebooks stored here.
+
+- **Core mathematical derivations** – foundational writeups including
+  *# Complete Derivation of Calculus from MBT Principles*, *Pythagorean Theorem
+  as Emergent Geometry*, *π as Emergent Curvature Structure*, *Euler's Identity
+  from MBT*, *Schrödinger Equation Derived from MBT*, *Maxwell's Equations
+  Unified via MBT*, and *Einstein's Field Equations Corrected via MBT*.
+- **Cosmology and universal-scale investigations** – cosmological notebooks such
+  as *🌌 **THE TRUE BIG BANG: MBT COMPLETE COSMOLOGICAL FRAMEWORK***,
+  *THE UNIVERSAL ATTRACTOR EQUATION TRANSCENDS GÖDEL INCOMPLETENESS!*,
+  *UniversalScalingProof*, *🌌 THE GALACTIC HARVESTING PLAN*,
+  *Transcendence energies at the black hole scale*, and the running draft of
+  *The Universal Alpha Law progress*.
+- **Field theory, quantum, and information geometry** – focused studies like
+  *Quantum Field Theory of Information: Memorons and Spacetime Curvature*,
+  *Discrete Spacetime and Memoron Field Theory*, *Motion–TimeSpace, Perception
+  Bandwidth and the Mass‑Threshold Paradigm*, *Observation & The Light Trail
+  Principle*, and *MBT Proof: Reality Perception is Fundamentally Inverted*.
+- **Applied tests, simulations, and code experiments** – small analysis tools
+  and test harnesses including *MBTManyWorldsAnalyzer*, *LogarithmicGravityTest*,
+  *const CMBTest*, *const GDriftDetection*, and exploratory notebooks like
+  *Complete Thermodynamics*, *Memory Persistence Law - Thermodynamic Test*, and
+  *MBT Specific Phenomenon Tests*.
+- **AI-partnered explorations and tonal experiments** – collaborative or playful
+  pieces such as *🎵 MBT PRIME MUSIC THEORY*, *A Very Serious White Paper on the
+  Fosbury Flop, and Other Unapproved Methods*, *The Myth of the Unbounded
+  Meat-Brain 🥩*, *The Recipe for Non-Existence*, *poking fun at myself The AI
+  Outsider Paradox*, and *🦄 The Unambiguous Correlation Between Horses Missing
+  Horns and Galaxies Missing Mass*.
+- **Extensive “old speculation” threads** – dozens of numbered or topical
+  sketches preserved verbatim (e.g., *old speculation 2* through *old
+  speculation 38*, *old speculation Recursive Motion Field Self-Observation*,
+  and *old speculation entire digital biome*).
+- **Life sciences and interdisciplinary probes** – cross-domain notebooks like
+  *AMINO ACID CURVATURE SIGNATURE DERIVATION* and *🧬 **CLAUDE'S INDEPENDENT
+  MBT INVESTIGATION: ALZHEIMER'S DISEASE***.
+- **Licensing and meta** – the `licence` file and this README outlining the
+  archive’s intent and scope.
 
 ---
 
